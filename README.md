@@ -1,10 +1,6 @@
-<div align="center">
+# create-interactive-commander
 
-# Create Interactive Commander
-
-<img alt="Logo" width="300px" height="300px" src="./media/logo.png">
-
-Creates a CLI project with interactive-commander and TypeScript
+Scaffold a CLI project with [interactive-commander][1] and TypeScript
 
 <div class="paragraph">
 
@@ -12,18 +8,26 @@ Creates a CLI project with interactive-commander and TypeScript
 
 </div>
 
-</div>
-
-<hr />
-
-TODO
-
-## Installation
-
-```bash
-npm install --save create-interactive-commander
-```
-
 ## Usage
 
-TODO
+Run the following command and follow the prompts:
+
+```bash
+npm create interactive-commander
+```
+
+You can also directly specify the template variables via command line arguments.
+For example to create a project in the `my-project` directory with the package
+name set to `node-my-command` and the command name set to `my-command`, run:
+
+```bash
+npm create interactive-commander -- --directory-name my-project --package-name node-my-command --command-name my-command
+```
+
+For more information, run:
+
+```bash
+npm create interactive-commander -- generate --help
+```
+
+[1]: https://github.com/fardjad/node-interactive-commander
