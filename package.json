@@ -34,7 +34,7 @@
   "dependencies": {
     "@inquirer/prompts": "^3.1.1",
     "glob": "^10.3.4",
-    "interactive-commander": "^0.4.5",
+    "interactive-commander": "^0.4.6",
     "templgen": "^0.1.31",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
