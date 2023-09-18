@@ -2,25 +2,6 @@ import { glob } from "glob";
 import { fileURLToPath } from "node:url";
 import { FileGenerator } from "templgen";
 
-export const parseArgToValidate =
-  (parseArg?: (value: string, previous: unknown) => unknown) =>
-  (value: string) => {
-    if (!parseArg) {
-      return true;
-    }
-
-    try {
-      parseArg(value, undefined as unknown);
-      return true;
-    } catch (error) {
-      if (error instanceof Error) {
-        return error.message;
-      }
-
-      throw error;
-    }
-  };
-
 export const scaffold = async (options: {
   targetDirectory: string;
   commandName: string;

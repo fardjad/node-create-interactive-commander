@@ -1,5 +1,4 @@
-import { parseArgToValidate, scaffold } from "./utils.ts";
-import * as inquirer from "@inquirer/prompts";
+import { scaffold } from "./utils.ts";
 import {
   CommanderError,
   type InteractiveCommand,
@@ -12,34 +11,34 @@ import path from "node:path";
 import isValidFilename from "valid-filename";
 import validatePackageName from "validate-npm-package-name";
 
-export const validatedInput =
-  (
-    getDefault?: (command: InteractiveCommand) => string,
-    input = inquirer.input,
-    parseArgToValidateFunction = parseArgToValidate,
-  ) =>
-  async (
-    currentValue: string | undefined,
+/**
+ * Set the default value of an option to the return value of a callback function.
+ * This is useful for creating dependant prompts for options.
+ *
+ * @param option
+ * @param callback - A function that returns the default value for the option
+ */
+export const setPromptDefault = (
+  option: InteractiveOption,
+  callback: (command: InteractiveCommand) => string,
+) => {
+  let { readFunction } = option;
+  readFunction = readFunction?.bind(option) as typeof readFunction;
+
+  option.readFunction = async (
+    currentValue: unknown,
     option: InteractiveOption,
     command: InteractiveCommand,
-  ) => {
-    const answer = await input({
-      message: option.description,
-      default: currentValue ?? getDefault?.(command),
-      validate: parseArgToValidateFunction(option.parseArg),
-    });
+  ) =>
+    readFunction?.(
+      currentValue ?? (await Promise.resolve(callback(command))),
+      option,
+      command,
+    );
+};
 
-    return option.parseArg
-      ? option.parseArg(answer, undefined as unknown)
-      : answer;
-  };
-
-export const createDirectoryNameOption = (
-  validatedInputFunction = validatedInput,
-  existsSyncFunction = fs.existsSync,
-) =>
+export const createDirectoryNameOption = (existsSyncFunction = fs.existsSync) =>
   new InteractiveOption("-d, --directory-name <name>", "directory name")
-    .prompt(validatedInputFunction())
     .argParser((value) => {
       if (!isValidFilename(value)) {
         throw new InvalidArgumentError("Invalid directory name");
@@ -58,14 +57,12 @@ export const createDirectoryNameOption = (
     .makeOptionMandatory();
 
 export const createPackageNameOption = (
-  validatedInputFunction = validatedInput,
-) =>
-  new InteractiveOption("-n, --package-name <name>", "package name")
-    .prompt(
-      validatedInputFunction((command) =>
-        path.basename(command.getOptionValue("directoryName") as string),
-      ),
-    )
+  setPromptDefaultFunction = setPromptDefault,
+) => {
+  const option = new InteractiveOption(
+    "-n, --package-name <name>",
+    "package name",
+  )
     .argParser((value) => {
       const { validForNewPackages, errors } = validatePackageName(value);
 
@@ -79,15 +76,21 @@ export const createPackageNameOption = (
     })
     .makeOptionMandatory();
 
+  setPromptDefaultFunction(option, (command) => {
+    const directoryName = command.getOptionValue("directoryName") as string;
+    return path.basename(directoryName);
+  });
+
+  return option;
+};
+
 export const createCommandNameOption = (
-  validatedInputFunction = validatedInput,
-) =>
-  new InteractiveOption("-c, --command-name <name>", "command name")
-    .prompt(
-      validatedInputFunction(
-        (command) => command.getOptionValue("packageName") as string,
-      ),
-    )
+  setPromptDefaultFunction = setPromptDefault,
+) => {
+  const option = new InteractiveOption(
+    "-c, --command-name <name>",
+    "command name",
+  )
     .argParser((value) => {
       if (!isValidFilename(value)) {
         throw new InvalidArgumentError("Invalid command name");
@@ -97,10 +100,18 @@ export const createCommandNameOption = (
     })
     .makeOptionMandatory();
 
+  setPromptDefaultFunction(
+    option,
+    (command) => command.getOptionValue("packageName") as string,
+  );
+
+  return option;
+};
+
 export const createAction =
   (
     scaffoldFunction = scaffold,
-    logFunction = console.log.bind(console) as typeof console.log,
+    log = console.log.bind(console) as typeof console.log,
   ) =>
   async ({
     directoryName,
@@ -111,7 +122,7 @@ export const createAction =
     commandName: string;
     packageName: string;
   }) => {
-    logFunction(`\nScaffolding project in ${directoryName}...`);
+    log(`\nScaffolding project in ${directoryName}...`);
 
     await scaffoldFunction({
       targetDirectory: directoryName,
@@ -119,10 +130,10 @@ export const createAction =
       packageName,
     });
 
-    logFunction("\nDone. Now run:\n");
-    logFunction(`  cd ${directoryName}`);
-    logFunction("  npm install");
-    logFunction("  npm run format");
+    log("\nDone. Now run:\n");
+    log(`  cd ${directoryName}`);
+    log("  npm install");
+    log("  npm run format");
   };
 
 export const register: RegisterFunction = (command: InteractiveCommand) => {

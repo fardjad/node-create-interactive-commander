@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/promise-function-async, unicorn/consistent-function-scoping */
+/* eslint-disable @typescript-eslint/promise-function-async */
 import {
   createAction,
   createCommandNameOption,
   createDirectoryNameOption,
   createPackageNameOption,
-  validatedInput,
+  setPromptDefault,
 } from "./index.ts";
 import { expect } from "expect";
 import {
@@ -13,85 +13,24 @@ import {
 } from "interactive-commander";
 import { test } from "node:test";
 
-class CancelablePromise<T> extends Promise<T> {
-  cancel: () => void;
-}
-
-await test("validateInput", async (t) => {
-  const getDefault = t.mock.fn(() => "default");
-  const input = t.mock.fn(
-    () =>
-      new CancelablePromise<string>((resolve) => {
-        resolve("value");
-      }),
-  );
-  const parseArgToValidate = t.mock.fn(() => () => true);
-
+await test("setPromptDefault", async (t) => {
+  const originalReadFunction = t.mock.fn();
   const option = {
-    description: "description",
-    parseArg() {},
+    readFunction: originalReadFunction,
   } as unknown as InteractiveOption;
-  const command = {} as unknown as InteractiveCommand;
+  const callback = t.mock.fn(() => "default value");
 
-  t.beforeEach(() => {
-    getDefault.mock.resetCalls();
-    input.mock.resetCalls();
-    parseArgToValidate.mock.resetCalls();
-  });
+  setPromptDefault(option, callback);
+  expect(option.readFunction).not.toBe(originalReadFunction);
 
-  await t.test(
-    "should call getDefault when currentValue is undefined",
-    async () => {
-      await validatedInput(getDefault, input)(undefined, option, command);
-      expect(getDefault.mock.callCount()).toBe(1);
-      expect(getDefault.mock.calls[0].arguments).toStrictEqual([command]);
-    },
+  await option.readFunction!(
+    undefined,
+    option,
+    undefined as unknown as InteractiveCommand,
   );
 
-  await t.test(
-    "should not call getDefault when currentValue is defined",
-    async () => {
-      await validatedInput(getDefault, input)("currentValue", option, command);
-      expect(getDefault.mock.callCount()).toBe(0);
-    },
-  );
-
-  await t.test("should call input", async () => {
-    await validatedInput(getDefault, input, parseArgToValidate)(
-      "currentValue",
-      option,
-      command,
-    );
-    expect(input.mock.callCount()).toBe(1);
-    expect(input.mock.calls[0].arguments).toStrictEqual([
-      {
-        message: option.description,
-        default: "currentValue",
-        validate: expect.any(Function),
-      },
-    ]);
-    expect(parseArgToValidate.mock.callCount()).toBe(1);
-    expect(parseArgToValidate.mock.calls[0].arguments).toStrictEqual([
-      option.parseArg,
-    ]);
-  });
-
-  await t.test(
-    "should return 'answer' when parseArg is undefined",
-    async () => {
-      const result = await validatedInput(
-        getDefault,
-        input,
-        parseArgToValidate,
-      )(
-        "currentValue",
-        { ...option, parseArg: undefined } as unknown as InteractiveOption,
-        command,
-      );
-
-      expect(result).toBe("value");
-    },
-  );
+  expect(originalReadFunction.mock.callCount()).toBe(1);
+  expect(callback.mock.callCount()).toBe(1);
 });
 
 await test("createDirectoryNameOption", async (t) => {
@@ -115,10 +54,7 @@ await test("createDirectoryNameOption", async (t) => {
     await t.test("when directory exists", async () => {
       const existsSyncFunction = t.mock.fn(() => true);
 
-      const directoryNameOption = createDirectoryNameOption(
-        validatedInput,
-        existsSyncFunction,
-      );
+      const directoryNameOption = createDirectoryNameOption(existsSyncFunction);
 
       expect(() => {
         directoryNameOption.parseArg!("valid", undefined as unknown);
@@ -128,10 +64,7 @@ await test("createDirectoryNameOption", async (t) => {
     await t.test("when directory does not exist", async () => {
       const existsSyncFunction = t.mock.fn(() => false);
 
-      const directoryNameOption = createDirectoryNameOption(
-        validatedInput,
-        existsSyncFunction,
-      );
+      const directoryNameOption = createDirectoryNameOption(existsSyncFunction);
 
       expect(() => {
         directoryNameOption.parseArg!("valid", undefined as unknown);
@@ -147,24 +80,21 @@ await test("createPackageNameOption", async (t) => {
   });
 
   await t.test(
-    "should use the basename of the directory as default",
+    "should set the default value to the directory name",
     async (t) => {
-      const fakeCommand = {
+      const setPromptDefault = t.mock.fn();
+      createPackageNameOption(setPromptDefault);
+
+      expect(setPromptDefault.mock.callCount()).toBe(1);
+      const callback = setPromptDefault.mock.calls[0].arguments[1] as (
+        command: InteractiveCommand,
+      ) => string;
+      const command = {
         getOptionValue() {
-          return "full/path/to/dir";
+          return "/a/b/c";
         },
       } as unknown as InteractiveCommand;
-      const fakeValidatedInputFunction = t.mock.fn(
-        () => () =>
-          new CancelablePromise<string>((resolve) => {
-            resolve("value");
-          }),
-      );
-      createPackageNameOption(fakeValidatedInputFunction);
-      const getDefaultFunction = (
-        fakeValidatedInputFunction.mock.calls[0].arguments as unknown[]
-      ).at(0) as (command: InteractiveCommand) => string;
-      expect(getDefaultFunction(fakeCommand)).toBe("dir");
+      expect(callback(command)).toBe("c");
     },
   );
 
@@ -188,6 +118,25 @@ await test("createCommandNameOption", async (t) => {
     const commandNameOption = createCommandNameOption();
     expect(commandNameOption.required).toBe(true);
   });
+
+  await t.test(
+    "should set the default value to the package name",
+    async (t) => {
+      const setPromptDefault = t.mock.fn();
+      createPackageNameOption(setPromptDefault);
+
+      expect(setPromptDefault.mock.callCount()).toBe(1);
+      const callback = setPromptDefault.mock.calls[0].arguments[1] as (
+        command: InteractiveCommand,
+      ) => string;
+      const command = {
+        getOptionValue() {
+          return "package-name";
+        },
+      } as unknown as InteractiveCommand;
+      expect(callback(command)).toBe("package-name");
+    },
+  );
 
   await t.test("should throw when command name is not valid", async (t) => {
     const commandNameOption = createCommandNameOption();
