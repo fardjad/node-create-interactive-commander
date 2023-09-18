@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Create a CLI project with interactive-commander and TypeScript",
   "keywords": [],
   "homepage": "https://github.com/fardjad/node-create-interactive-commander",
@@ -36,6 +36,7 @@
     "glob": "^10.3.4",
     "interactive-commander": "^0.5.0",
     "templgen": "^0.1.32",
+    "tsx": "^3.12.10",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
@@ -55,7 +56,6 @@
     "npm-check-updates": "^16.14.4",
     "prettier": "^3.0.3",
     "prettier-plugin-packagejson": "^2.4.5",
-    "tsx": "^3.12.10",
     "typescript": "^5.2.2"
   },
   "engines": {
