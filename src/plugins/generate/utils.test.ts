@@ -19,12 +19,16 @@ await test("scaffold", async (t) => {
     fileGenerator,
   });
 
+  const sourceDirectory = fileURLToPath(
+    new URL("../../../templates/generate", import.meta.url),
+  );
   expect(generate.mock.calls.length).toBe(1);
   expect(generate.mock.calls[0].arguments).toEqual([
-    fileURLToPath(new URL("../../../templates", import.meta.url)),
+    sourceDirectory,
     "/dummy/directory",
     expect.any(Array),
     {
+      __dirname: sourceDirectory,
       commandName: "dummy-command",
       directoryName: "/dummy/directory",
       packageName: "dummy-package",

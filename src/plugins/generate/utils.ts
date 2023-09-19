@@ -9,7 +9,7 @@ export const scaffold = async (options: {
   fileGenerator?: FileGenerator;
 }) => {
   const sourceDirectory = fileURLToPath(
-    new URL("../../../templates", import.meta.url),
+    new URL("../../../templates/generate", import.meta.url),
   );
 
   const fileGenerator =
@@ -31,6 +31,7 @@ export const scaffold = async (options: {
       directoryName: options.targetDirectory,
       commandName: options.commandName,
       packageName: options.packageName,
+      __dirname: sourceDirectory,
     },
   );
 };

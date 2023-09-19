@@ -42,6 +42,8 @@ jobs:
           npm audit fix --quiet --no-progress --no-fund || true
           npm run fix &> /dev/null || true
 
+          ./scripts/update-template-dependencies.sh
+
           git add -u
           git update-index --refresh 
           if ! git diff-index --quiet HEAD --; then

@@ -1,0 +1,45 @@
+<% 
+const fs = await import("fs");
+const path = await import("path");
+
+const eslintExtArgs =
+  "--ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts";
+
+const dependencies = JSON.parse(
+  await fs.promises.readFile(
+    path.join(__dirname, "../dependencies.json"),
+    "utf8"
+  )
+);
+
+const devDependencies = JSON.parse(
+  await fs.promises.readFile(
+    path.join(__dirname, "../dev-dependencies.json"),
+    "utf8"
+  )
+);
+%>
+{
+  "name": "<%- locals.packageName %>",
+  "version": "0.0.0",
+  "type": "module",
+  "bin": {
+    "<%- locals.commandName %>": "./bin/run.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "format": "prettier --write . && eslint <%- eslintExtArgs %> --fix .",
+    "fix": "npm run format",
+    "lint": "prettier --check . && eslint <%- eslintExtArgs %> .",
+    "pretest": "tsc",
+    "test": "glob -c \"tsx --test --test-reporter spec\" \"src/**/*.test.ts\"",
+    "posttest": "npm run lint",
+    "test:coverage": "c8 --reporter=lcov npm run test"
+  },
+  "dependencies": <%- JSON.stringify(dependencies) %>,
+  "devDependencies": <%- JSON.stringify(devDependencies) %>
+}
