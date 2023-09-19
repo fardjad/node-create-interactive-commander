@@ -31,7 +31,8 @@
     "bin",
     "src",
     "templates",
-    "tsconfig.json"
+    "tsconfig.json",
+    "!src/**/*.test.ts"
   ],
   "scripts": {
     "fix": "prettier --write . && eslint --ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts --fix .",
