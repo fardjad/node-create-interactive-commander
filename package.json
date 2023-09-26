@@ -43,20 +43,20 @@
     "test:coverage": "c8 --reporter=lcov npm run test"
   },
   "dependencies": {
-    "@inquirer/prompts": "^3.1.1",
-    "glob": "^10.3.6",
-    "interactive-commander": "^0.5.7",
+    "@inquirer/prompts": "^3.1.2",
+    "glob": "^10.3.9",
+    "interactive-commander": "^0.5.9",
     "templgen": "^0.1.36",
-    "tsx": "^3.12.10",
+    "tsx": "^3.13.0",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "@types/node": "^20.6.4",
+    "@types/node": "^20.7.0",
     "@types/validate-npm-package-name": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
     "c8": "^8.0.1",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
