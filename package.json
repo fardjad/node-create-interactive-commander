@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -45,9 +45,9 @@
   "dependencies": {
     "@inquirer/prompts": "^3.2.0",
     "glob": "^10.3.10",
-    "interactive-commander": "^0.5.30",
-    "templgen": "^0.1.49",
-    "tsx": "^3.13.0",
+    "interactive-commander": "^0.5.31",
+    "templgen": "^0.1.50",
+    "tsx": "^3.14.0",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
