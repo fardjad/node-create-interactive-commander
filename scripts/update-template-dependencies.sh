@@ -22,7 +22,7 @@ npm ci
 rm -rf template-test
 node ./bin/run.js generate -I --directory-name template-test --package-name template-test --command-name template-test
 
-npx ncu --packageFile ./template-test/package.json --upgrade
+npx ncu --packageFile ./template-test/package.json --upgrade -x tsx
 
 cd template-test
 npm install
