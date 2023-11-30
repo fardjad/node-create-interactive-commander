@@ -47,7 +47,7 @@
     "glob": "^10.3.10",
     "interactive-commander": "^0.5.68",
     "templgen": "^0.1.78",
-    "tsx": "^3.14.0",
+    "tsx": "^4.6.0",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
