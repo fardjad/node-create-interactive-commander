@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.1.83",
+  "version": "0.1.84",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -45,8 +45,8 @@
   "dependencies": {
     "@inquirer/prompts": "^3.3.0",
     "glob": "^10.3.10",
-    "interactive-commander": "^0.5.82",
-    "templgen": "^0.1.88",
+    "interactive-commander": "^0.5.83",
+    "templgen": "^0.1.89",
     "tsx": "^4.6.2",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
@@ -58,7 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "c8": "^8.0.1",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-xo": "^0.43.1",
     "eslint-config-xo-typescript": "^1.0.1",
