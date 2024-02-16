@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.1.137",
+  "version": "0.1.138",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -45,15 +45,15 @@
   "dependencies": {
     "@inquirer/prompts": "^4.0.0",
     "glob": "^10.3.10",
-    "interactive-commander": "^0.5.135",
-    "templgen": "^0.1.125",
+    "interactive-commander": "^0.5.136",
+    "templgen": "^0.1.126",
     "tsx": "^4.7.1",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.11.19",
     "@types/validate-npm-package-name": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.0.1",
@@ -66,7 +66,7 @@
     "expect": "^29.7.0",
     "npm-check-updates": "^16.14.15",
     "prettier": "^3.2.5",
-    "prettier-plugin-packagejson": "^2.4.10",
+    "prettier-plugin-packagejson": "^2.4.11",
     "prettier-plugin-sh": "^0.14.0",
     "typescript": "^5.3.3"
   },
