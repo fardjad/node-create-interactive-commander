@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.1.162",
+  "version": "0.1.163",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -46,7 +46,7 @@
     "@inquirer/prompts": "^4.3.0",
     "glob": "^10.3.10",
     "interactive-commander": "^0.5.157",
-    "templgen": "^0.1.142",
+    "templgen": "^0.1.143",
     "tsx": "^4.7.1",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
@@ -68,7 +68,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.4.12",
     "prettier-plugin-sh": "^0.14.0",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "engines": {
     "node": ">=18"
