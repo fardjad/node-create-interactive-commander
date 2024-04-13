@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.1.172",
+  "version": "0.1.173",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -43,20 +43,20 @@
     "test:coverage": "c8 --reporter=lcov npm run test"
   },
   "dependencies": {
-    "@inquirer/prompts": "^4.3.0",
+    "@inquirer/prompts": "^5.0.0",
     "glob": "^10.3.12",
-    "interactive-commander": "^0.5.163",
-    "templgen": "^0.1.151",
+    "interactive-commander": "^0.5.164",
+    "templgen": "^0.1.152",
     "tsx": "^4.7.2",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.12.4",
+    "@types/node": "^20.12.7",
     "@types/validate-npm-package-name": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "^7.5.0",
-    "@typescript-eslint/parser": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
     "c8": "^9.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -64,11 +64,11 @@
     "eslint-config-xo-typescript": "^4.0.0",
     "eslint-plugin-unicorn": "^52.0.0",
     "expect": "^29.7.0",
-    "npm-check-updates": "^16.14.17",
+    "npm-check-updates": "^16.14.18",
     "prettier": "^3.2.5",
-    "prettier-plugin-packagejson": "^2.4.14",
+    "prettier-plugin-packagejson": "^2.5.0",
     "prettier-plugin-sh": "^0.14.0",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=18"
