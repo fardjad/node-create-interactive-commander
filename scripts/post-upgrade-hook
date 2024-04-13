@@ -18,4 +18,4 @@ if [ -d "./template-test" ]; then
   popd
 fi
 
-npm version patch
+npm version patch --no-git-tag-version
