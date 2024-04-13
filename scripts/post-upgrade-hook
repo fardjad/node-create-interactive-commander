@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+npm run fix
+npm run test
+
+if [ ! -d "./template-test" ]; then
+  exit 0
+fi
+
+cd template-test
+npm run format
+npm run test
+node ./bin/run.js hello --name world
+
+npm pkg get dependencies > ../templates/dependencies.json
+npm pkg get devDependencies > ../templates/dev-dependencies.json
