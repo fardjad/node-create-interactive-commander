@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+function install() {
+  npm install
+  npm audit fix --quiet --no-progress --no-fund || true
+}
+
+install
+
+if [ ! -d "./template-test" ]; then
+  exit 0
+fi
+
+cd template-test
+install
