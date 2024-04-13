@@ -29,4 +29,3 @@ jobs:
           ncu-upgrade-extra-flags: --deep -x eslint
           dependency-install-script: scripts/install-dependencies
           post-upgrade-hook-script: scripts/post-upgrade-hook
-          commit-message-preprocessor-script: scripts/commit-message-preprocessor.mjs
