@@ -1,0 +1,58 @@
+name: automatic-npm-check-updates
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  automatic-npm-check-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
+        with:
+          node-version: "lts/*"
+          check-latest: true
+      - name: Cache node modules
+        uses: actions/cache@main
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Generate a test project
+        shell: bash
+        run: |
+          npm install
+          rm -rf template-test
+          node ./bin/run.js generate -I --directory-name template-test --package-name template-test --command-name template-test
+      - uses: fardjad/my-actions/automatic-npm-check-updates@main
+        with:
+          github-token: ${{ secrets.GH_PAT }}
+          post-update-commands: |
+            function install_format_test() {
+              npm install
+              npm audit fix --quiet --no-progress --no-fund || true
+              npm run format
+              npm run test
+            }
+
+            install_format_test
+
+            if [ ! -d "./template-test" ]; then
+              exit 1
+            fi
+
+            pushd template-test
+            install_format_test
+            node ./bin/run.js hello --name world
+            npm pkg get dependencies > ../templates/dependencies.json
+            npm pkg get devDependencies > ../templates/dev-dependencies.json
+            popd
+
+            npm version patch --no-git-tag-version

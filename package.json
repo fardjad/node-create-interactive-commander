@@ -35,7 +35,8 @@
     "!src/**/*.test.ts"
   ],
   "scripts": {
-    "fix": "prettier --write . && eslint --ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts --fix .",
+    "fix": "npm run format",
+    "format": "prettier --write . && eslint --ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts --fix .",
     "lint": "prettier --check . && eslint --ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts .",
     "pretest": "tsc",
     "test": "glob -c \"tsx --test --test-reporter spec\" \"src/**/*.test.ts\"",
