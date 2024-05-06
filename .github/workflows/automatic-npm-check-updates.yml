@@ -32,6 +32,7 @@ jobs:
           rm -rf template-test
           node ./bin/run.js generate -I --directory-name template-test --package-name template-test --command-name template-test
       - uses: fardjad/my-actions/automatic-npm-check-updates@main
+        if: success()
         with:
           github-token: ${{ secrets.GH_PAT }}
           post-update-commands: |
