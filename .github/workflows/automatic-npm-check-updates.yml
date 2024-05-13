@@ -36,21 +36,19 @@ jobs:
         with:
           github-token: ${{ secrets.GH_PAT }}
           post-update-commands: |
-            function install_format_test() {
-              npm install
-              npm audit fix --quiet --no-progress --no-fund || true
-              npm run format
-              npm run test
-            }
-
-            install_format_test
+            npm install
+            npm audit fix --quiet --no-progress --no-fund || true
+            npm run format
+            npm run test
 
             if [ ! -d "./template-test" ]; then
               exit 1
             fi
 
             pushd template-test
-            install_format_test
+            npm install
+            npm audit fix --quiet --no-progress --no-fund || true
+            npm run test
             node ./bin/run.js hello --name world
             npm pkg get dependencies > ../templates/dependencies.json
             npm pkg get devDependencies > ../templates/dev-dependencies.json

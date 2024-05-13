@@ -188,6 +188,6 @@ await test("createAction", async (t) => {
       packageName: "packageName",
     });
 
-    expect(logFunction.mock.callCount()).toBe(5);
+    expect(logFunction.mock.callCount()).toBe(4);
   });
 });

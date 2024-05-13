@@ -49,7 +49,6 @@ jobs:
           node ./bin/run.js generate -I --directory-name template-test --package-name template-test --command-name template-test
           cd template-test
           npm install
-          npm run format
           npm test
   version-check:
     runs-on: ubuntu-latest

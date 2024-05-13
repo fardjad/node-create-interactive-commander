@@ -133,7 +133,6 @@ export const createAction =
     log("\nDone. Now run:\n");
     log(`  cd ${directoryName}`);
     log("  npm install");
-    log("  npm run format");
   };
 
 export const register: RegisterFunction = (command: InteractiveCommand) => {
