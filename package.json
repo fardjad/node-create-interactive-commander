@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.2.25",
+  "version": "0.2.26",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -48,7 +48,7 @@
     "glob": "^10.4.1",
     "interactive-commander": "^0.5.171",
     "templgen": "^0.1.152",
-    "tsx": "^4.15.3",
+    "tsx": "^4.15.4",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.1"
   },
