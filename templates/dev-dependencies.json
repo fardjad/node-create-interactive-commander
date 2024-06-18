@@ -1,4 +1,4 @@
 {
-  "@types/node": "^20.14.2",
+  "@types/node": "^20.14.4",
   "typescript": "^5.4.5"
 }
