@@ -1,5 +1,5 @@
 {
   "glob": "^10.4.2",
   "interactive-commander": "^0.5.173",
-  "tsx": "^4.15.9"
+  "tsx": "^4.16.0"
 }
