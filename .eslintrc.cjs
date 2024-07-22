@@ -16,6 +16,7 @@ module.exports = {
       rules: {
         "unicorn/no-process-exit": "off",
         "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/only-throw-error": "off",
         "unicorn/prevent-abbreviations": "off",
       },
     },
