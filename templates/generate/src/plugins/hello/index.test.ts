@@ -1,7 +1,7 @@
-import { createAction, register } from "./index.ts";
-import { InteractiveCommand } from "interactive-commander";
 import assert from "node:assert";
 import { test } from "node:test";
+import { InteractiveCommand } from "interactive-commander";
+import { createAction, register } from "./index.ts";
 
 await test("action", (t) => {
   const log = t.mock.fn();

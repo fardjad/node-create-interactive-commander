@@ -39,6 +39,7 @@ jobs:
             npm install
             npm audit fix --quiet --no-progress --no-fund || true
             npm run format
+            npm run lint
             npm run test
 
             if [ ! -d "./template-test" ]; then
@@ -55,3 +56,6 @@ jobs:
             popd
 
             npm version patch --no-git-tag-version
+            # npm messes up the formatting of package.json
+            npm run format
+            npm run lint

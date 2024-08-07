@@ -1,4 +1,4 @@
-import { type RegisterFunction } from "interactive-commander";
+import type { RegisterFunction } from "interactive-commander";
 
 export const createAction =
   (log = console.log.bind(console) as typeof console.log) =>

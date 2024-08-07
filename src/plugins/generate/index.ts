@@ -1,4 +1,5 @@
-import { scaffold } from "./utils.ts";
+import fs from "node:fs";
+import path from "node:path";
 import {
   CommanderError,
   type InteractiveCommand,
@@ -6,10 +7,9 @@ import {
   InvalidArgumentError,
   type RegisterFunction,
 } from "interactive-commander";
-import fs from "node:fs";
-import path from "node:path";
 import isValidFilename from "valid-filename";
 import validatePackageName from "validate-npm-package-name";
+import { scaffold } from "./utils.ts";
 
 /**
  * Set the default value of an option to the return value of a callback function.
@@ -48,7 +48,7 @@ export const createDirectoryNameOption = (existsSyncFunction = fs.existsSync) =>
         throw new CommanderError(
           -1,
           "directoryExists",
-          `Directory already exists`,
+          "Directory already exists",
         );
       }
 

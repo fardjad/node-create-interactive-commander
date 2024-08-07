@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
+import { test } from "node:test";
+import { expect } from "expect";
+import type {
+  InteractiveCommand,
+  InteractiveOption,
+} from "interactive-commander";
 import {
   createAction,
   createCommandNameOption,
@@ -6,12 +11,6 @@ import {
   createPackageNameOption,
   setPromptDefault,
 } from "./index.ts";
-import { expect } from "expect";
-import {
-  type InteractiveOption,
-  type InteractiveCommand,
-} from "interactive-commander";
-import { test } from "node:test";
 
 await test("setPromptDefault", async (t) => {
   const originalReadFunction = t.mock.fn();
@@ -23,7 +22,7 @@ await test("setPromptDefault", async (t) => {
   setPromptDefault(option, callback);
   expect(option.readFunction).not.toBe(originalReadFunction);
 
-  await option.readFunction!(
+  await option.readFunction?.(
     undefined,
     option,
     undefined as unknown as InteractiveCommand,
@@ -43,7 +42,7 @@ await test("createDirectoryNameOption", async (t) => {
     const directoryNameOption = createDirectoryNameOption();
 
     expect(() => {
-      directoryNameOption.parseArg!(
+      directoryNameOption.parseArg?.(
         "invalid/directory/name",
         undefined as unknown,
       );
@@ -57,7 +56,7 @@ await test("createDirectoryNameOption", async (t) => {
       const directoryNameOption = createDirectoryNameOption(existsSyncFunction);
 
       expect(() => {
-        directoryNameOption.parseArg!("valid", undefined as unknown);
+        directoryNameOption.parseArg?.("valid", undefined as unknown);
       }).toThrow();
     });
 
@@ -67,7 +66,7 @@ await test("createDirectoryNameOption", async (t) => {
       const directoryNameOption = createDirectoryNameOption(existsSyncFunction);
 
       expect(() => {
-        directoryNameOption.parseArg!("valid", undefined as unknown);
+        directoryNameOption.parseArg?.("valid", undefined as unknown);
       }).not.toThrow();
     });
   });
@@ -101,14 +100,17 @@ await test("createPackageNameOption", async (t) => {
   await t.test("should throw when package name is not valid", async (t) => {
     const packageNameOption = createPackageNameOption();
     expect(() => {
-      packageNameOption.parseArg!("invalid/package/name", undefined as unknown);
+      packageNameOption.parseArg?.(
+        "invalid/package/name",
+        undefined as unknown,
+      );
     }).toThrow();
   });
 
   await t.test("should not throw when package name is valid", async (t) => {
     const packageNameOption = createPackageNameOption();
     expect(() => {
-      packageNameOption.parseArg!("valid-package-name", undefined as unknown);
+      packageNameOption.parseArg?.("valid-package-name", undefined as unknown);
     }).not.toThrow();
   });
 });
@@ -141,14 +143,17 @@ await test("createCommandNameOption", async (t) => {
   await t.test("should throw when command name is not valid", async (t) => {
     const commandNameOption = createCommandNameOption();
     expect(() => {
-      commandNameOption.parseArg!("invalid/command/name", undefined as unknown);
+      commandNameOption.parseArg?.(
+        "invalid/command/name",
+        undefined as unknown,
+      );
     }).toThrow();
   });
 
   await t.test("should not throw when command name is valid", async (t) => {
     const commandNameOption = createCommandNameOption();
     expect(() => {
-      commandNameOption.parseArg!("valid-command-name", undefined as unknown);
+      commandNameOption.parseArg?.("valid-command-name", undefined as unknown);
     }).not.toThrow();
   });
 });

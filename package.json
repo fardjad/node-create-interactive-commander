@@ -27,48 +27,32 @@
   "bin": {
     "create-interactive-commander": "./bin/run.js"
   },
-  "files": [
-    "bin",
-    "src",
-    "templates",
-    "tsconfig.json",
-    "!src/**/*.test.ts"
-  ],
+  "files": ["bin", "src", "templates", "tsconfig.json", "!src/**/*.test.ts"],
   "scripts": {
     "fix": "npm run format",
-    "format": "prettier --write . && eslint --ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts --fix .",
-    "lint": "prettier --check . && eslint --ext .js --ext .cjs --ext .mjs --ext .ts --ext .cts --ext .mts --ext .d.ts .",
+    "format": "biome format --write && biome check --write",
+    "lint": "biome lint --write",
     "pretest": "tsc",
     "test": "glob -c \"tsx --test --test-reporter spec\" \"src/**/*.test.ts\"",
-    "posttest": "npm run lint",
+    "posttest": "biome ci",
     "test:coverage": "c8 --reporter=lcov npm run test"
   },
   "dependencies": {
-    "@inquirer/prompts": "^5.3.6",
+    "@inquirer/prompts": "^5.3.8",
     "glob": "^11.0.0",
-    "interactive-commander": "^0.5.184",
+    "interactive-commander": "^0.5.186",
     "templgen": "^0.1.152",
-    "tsx": "^4.16.2",
+    "tsx": "^4.16.5",
     "valid-filename": "^4.0.0",
     "validate-npm-package-name": "^5.0.1"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^22.0.0",
+    "@biomejs/biome": "1.8.3",
+    "@types/node": "^22.1.0",
     "@types/validate-npm-package-name": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
     "c8": "^10.1.2",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-xo": "^0.45.0",
-    "eslint-config-xo-typescript": "^5.0.0",
-    "eslint-plugin-unicorn": "^55.0.0",
     "expect": "^29.7.0",
-    "npm-check-updates": "^16.14.20",
-    "prettier": "^3.3.3",
-    "prettier-plugin-packagejson": "^2.5.1",
-    "prettier-plugin-sh": "^0.14.0",
+    "npm-check-updates": "^17.0.3",
     "typescript": "^5.5.4"
   },
   "engines": {

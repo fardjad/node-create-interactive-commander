@@ -1,5 +1,5 @@
 import { glob } from "glob";
-import { InteractiveCommand, CommanderError } from "interactive-commander";
+import { CommanderError, InteractiveCommand } from "interactive-commander";
 
 const program = new InteractiveCommand();
 

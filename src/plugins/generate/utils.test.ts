@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { scaffold } from "./utils.ts";
-import { expect } from "expect";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { type FileGenerator } from "templgen";
+import { expect } from "expect";
+import type { FileGenerator } from "templgen";
+import { scaffold } from "./utils.ts";
 
 await test("scaffold", async (t) => {
   const fileGenerator: FileGenerator = {

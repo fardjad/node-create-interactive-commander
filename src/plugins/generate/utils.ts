@@ -1,5 +1,5 @@
-import { glob } from "glob";
 import { fileURLToPath } from "node:url";
+import { glob } from "glob";
 import { FileGenerator } from "templgen";
 
 export const scaffold = async (options: {
