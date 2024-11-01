@@ -1,6 +1,6 @@
 {
   "name": "create-interactive-commander",
-  "version": "0.2.98",
+  "version": "0.2.99",
   "description": "Scaffold a CLI project with interactive-commander and TypeScript",
   "keywords": [
     "commander",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@types/node": "^22.8.4",
+    "@types/node": "^22.8.6",
     "@types/validate-npm-package-name": "^4.0.2",
     "c8": "^10.1.2",
     "expect": "^29.7.0",
